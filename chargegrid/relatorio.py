@@ -100,6 +100,10 @@ def salvar_saidas(res: ResultadoDia, resumo: dict, pasta: Path | str) -> list[Pa
     return [telemetria, sessoes, log, resumo_json]
 
 
+def _plural(quantidade: int, palavra: str) -> str:
+    return f"{quantidade} {palavra}" + ("" if quantidade == 1 else "s")
+
+
 def _titulo(texto: str) -> str:
     return f"\n{'─' * 4} {texto} {'─' * (LARGURA - 6 - len(texto))}"
 
@@ -125,8 +129,8 @@ def formatar_dashboard(resumo: dict, recomendacoes: list[str], sessoes_df: pd.Da
         "  Todos os dados são SIMULADOS (ver README).",
         "═" * LARGURA,
         _titulo("Operação"),
-        f"  Sessões: {r['sessoes']} ({r['sessoes_concluidas']} concluídas, "
-        f"{r['recusadas']} recusadas por falta de ponto)",
+        f"  Sessões: {r['sessoes']} ({_plural(r['sessoes_concluidas'], 'concluída')}, "
+        f"{_plural(r['recusadas'], 'recusada')} por falta de ponto)",
         f"  Pico de demanda desejada  : {br(r['pico_desejado_kw'], 1)} kW",
         f"  Limite da rede            : {br(r['limite_kw'], 1)} kW ({origem_limite})",
         f"  Pico de importação        : {br(r['pico_rede_kw'], 1)} kW",
@@ -200,12 +204,13 @@ def barra(valor: float, maximo: float, largura: int = 20) -> str:
 
 def formatar_linha_ao_vivo(linha: dict, eventos: list[str]) -> str:
     faixa = "PICO  " if linha["em_pico"] else "normal"
+    ativos = int(linha["pontos_ativos"])
     texto = (
         f"{linha['hora']}  sol {br(linha['solar_kw'], 1):>5} kW | "
         f"EVs {br(linha['entregue_kw'], 1):>5} kW | "
         f"rede {br(linha['rede_kw'], 1):>5}/{br(linha['limite_kw'], 0)} kW "
         f"{barra(linha['rede_kw'], linha['limite_kw'])} | "
-        f"{int(linha['pontos_ativos'])} ativos | {faixa}"
+        f"{ativos} {'ativo ' if ativos == 1 else 'ativos'} | {faixa}"
     )
     if linha["em_corte"]:
         texto += f" | CORTE {linha['fator_corte']:.0%}"

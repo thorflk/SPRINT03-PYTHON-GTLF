@@ -87,6 +87,17 @@ def test_dashboard_lista_indicadores_e_recomendacoes(contexto):
         assert trecho in texto
 
 
+def test_dashboard_concorda_singular_e_plural(contexto):
+    res, prev, _, r = contexto
+    textos = recomendacoes(prev, cfg.LIMITE_OPERACIONAL_KW)
+    um = formatar_dashboard({**r, "sessoes_concluidas": 1, "recusadas": 1}, textos,
+                            sessoes_para_df(res.sessoes))
+    varios = formatar_dashboard({**r, "sessoes_concluidas": 2, "recusadas": 0}, textos,
+                                sessoes_para_df(res.sessoes))
+    assert "1 concluída, 1 recusada por falta" in um
+    assert "2 concluídas, 0 recusadas por falta" in varios
+
+
 def test_tabela_markdown_tem_cabecalho_e_linhas(contexto):
     md = tabela_resultados_markdown(contexto[3])
     assert md.startswith("| Indicador | Valor |")
@@ -98,6 +109,13 @@ def test_barra_limita_entre_zero_e_o_maximo():
     assert barra(5, 10, 10) == "[█████░░░░░]"
     assert barra(99, 10, 10) == "[██████████]"
     assert barra(3, 0, 10) == "[░░░░░░░░░░]"
+
+
+def test_linha_ao_vivo_concorda_singular_e_plural(contexto):
+    res, *_ = contexto
+    base = res.telemetria.iloc[0].to_dict()
+    assert "1 ativo " in formatar_linha_ao_vivo({**base, "pontos_ativos": 1}, [])
+    assert "3 ativos" in formatar_linha_ao_vivo({**base, "pontos_ativos": 3}, [])
 
 
 def test_linha_ao_vivo_mostra_hora_eventos_e_corte(contexto):
