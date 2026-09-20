@@ -17,6 +17,15 @@ def test_markdown_tem_cabecalho_e_linhas():
     assert "violações" in resumo_markdown(df).lower()
 
 
+def test_tabela_mantem_inteiros_como_inteiros():
+    df = varrer(range(1, 3))
+    primeira_linha = tabela_markdown(df).splitlines()[2]
+    celulas = [c.strip() for c in primeira_linha.strip("|").split("|")]
+    assert celulas[0] == "1"  # seed
+    assert "." not in celulas[1]  # sessoes
+    assert "." not in celulas[5] and "." not in celulas[7]  # minutos_em_corte, violacoes
+
+
 def test_main_grava_o_arquivo(tmp_path):
     destino = tmp_path / "varredura.md"
     assert main(["--n", "3", "--saida", str(destino)]) == 0

@@ -40,8 +40,8 @@ def varrer(seeds: Iterable[int]) -> pd.DataFrame:
 def tabela_markdown(df: pd.DataFrame) -> str:
     colunas = list(df.columns)
     linhas = ["| " + " | ".join(colunas) + " |", "|" + "---|" * len(colunas)]
-    for _, linha in df.iterrows():
-        linhas.append("| " + " | ".join(str(linha[c]) for c in colunas) + " |")
+    for registro in df.to_dict("records"):  # mantém int como int (iterrows() viraria float)
+        linhas.append("| " + " | ".join(str(registro[c]) for c in colunas) + " |")
     return "\n".join(linhas)
 
 
