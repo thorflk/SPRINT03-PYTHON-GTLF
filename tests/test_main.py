@@ -63,7 +63,9 @@ def test_velocidade_negativa_devolve_erro_claro(tmp_path, capsys):
     assert "velocidade" in capsys.readouterr().err
 
 
-@pytest.mark.parametrize("janela", ["10:60-12:00", "24:30-24:45", "10:00-25:00", "18:00", "a:b-c:d"])
+@pytest.mark.parametrize(
+    "janela", ["10:60-12:00", "24:30-24:45", "10:00-25:00", "18:00", "a:b-c:d"]
+)
 def test_janela_impossivel_ou_mal_formada_devolve_erro(tmp_path, capsys, janela):
     assert cli.main(["--saida", str(tmp_path), "--ao-vivo", "--janela", janela]) == 2
     assert "janela" in capsys.readouterr().err.lower()
