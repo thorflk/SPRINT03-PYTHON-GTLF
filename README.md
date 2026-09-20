@@ -1,5 +1,7 @@
 # ChargeGrid Intelligence — Sprint 3
 
+[![CI](https://github.com/thorflk/SPRINT03-PYTHON-GTLF/actions/workflows/ci.yml/badge.svg)](https://github.com/thorflk/SPRINT03-PYTHON-GTLF/actions/workflows/ci.yml)
+
 ### Pensamento Computacional e Automação com Python · FIAP x GoodWe · EV Challenge 2026 · Grupo GTLF
 
 > **Aviso:** todos os dados deste repositório são **simulados**. Não há hardware, rede OCPP/MODBUS nem
@@ -299,7 +301,7 @@ entre os carregadores e o efeito da geração solar sobre o teto, lógica candid
 
 ## 9. Como executar
 
-Pré-requisito: Python 3.10 ou superior.
+Pré-requisito: Python 3.10 ou superior (o CI executa testes, lint e a demonstração nas versões 3.10, 3.12 e 3.14).
 
 ```bash
 python -m venv .venv
@@ -390,7 +392,8 @@ o padrão (`17:55-21:30`) mostra a virada da tarifa às 18h, o crescimento da de
 │   └── resultados/            # resultados reais da seed de demonstração
 ├── .github/workflows/ci.yml   # testes, lint e execução em cada push
 ├── requirements.txt           # dependências de execução
-└── requirements-dev.txt       # + pytest e ruff
+├── requirements-dev.txt       # + pytest e ruff
+└── LICENSE                    # MIT
 ```
 
 ---
