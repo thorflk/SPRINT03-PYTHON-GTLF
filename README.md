@@ -144,6 +144,7 @@ sequenceDiagram
 
 | Componente | Arquivo | Por que assim | Sustentabilidade | Automação inteligente | Eficiência energética |
 |---|---|---|---|---|---|
+| Carregadores GoodWe HCA G2 (7,4 / 11 / 22 kW) | `config.py`, `sessoes.py` | É o equipamento adotado no Challenge, então o protótipo simula o mesmo hardware; três potências nominais cobrem carregamento monofásico e trifásico e evidenciam o gargalo do veículo (OBC), que limita a potência real | Eletromobilidade no lugar do combustível fóssil | Cada ponto é comandado individualmente pelo controlador | Potência ajustável por ponto permite dividir a carga disponível |
 | Usina solar GoodWe | `solar.py` | O inversor GoodWe é o ponto de contato do desafio com energia renovável; a curva em sen² com nuvens é simples e suficiente para mostrar a sinergia com as recargas | Energia limpa consumida no local | — | A solar entra **antes** da rede e amplia o teto de potência |
 | Medidor estilo MODBUS | `medidor.py` | O MODBUS é o padrão de medidores citado na Sprint 1; dois registradores (W e Wh) bastam para telemetria | — | Fonte dos dados que alimentam as decisões | Medição por ponto permite auditar cada kWh |
 | Mensagens OCPP 1.6J | `ocpp.py` | O OCPP é o protocolo aberto que padroniza carregadores de marcas diferentes (problema da Sprint 1); o log em JSON Lines é a evidência dos comandos automatizados | — | O controlador comanda os pontos sem intervenção humana (`SetChargingProfile`) | Só há comando quando há corte, sem tráfego desnecessário |
@@ -287,6 +288,11 @@ execução:** é a camada de simulação e automação em Python. Ele **adapta**
 | Margem de segurança de 0,80 sobre a carga disponível | `backend/app/services/dimensionamento.py` | `chargegrid/config.py` |
 | CO₂ evitado (0,16 kWh/km; 0,12 kg/km) | `backend/app/services/sustainability.py` e `core/config.py` | `chargegrid/relatorio.py` |
 
+**Como o HCA G2 se comunica no mundo real.** Segundo a documentação do Challenge, o HCA G2 não expõe API pública e o
+portal SEMS+ da GoodWe oferece apenas consulta periódica (modelo *pull*); por isso a integração real do Challenge é
+feita por *polling*. Neste protótipo, as mensagens OCPP 1.6J simuladas representam o **contrato de dados** do protocolo
+aberto proposto na Sprint 1, sem afirmar que o carregador físico fale OCPP diretamente.
+
 **Complemento.** No Challenge, a potência dos carregadores é monitorada contra o limite do estabelecimento
 (`power_limit_kw`, no painel do proprietário). Este protótipo **implementa e valida** a redistribuição da potência
 entre os carregadores e o efeito da geração solar sobre o teto, lógica candidata a ser incorporada ao backend.
@@ -348,7 +354,8 @@ o padrão (`17:55-21:30`) mostra a virada da tarifa às 18h, o crescimento da de
 ### Limitações
 
 - **Tudo é simulado.** Não há comunicação de rede real OCPP/MODBUS; as mensagens são estruturas equivalentes e só as
-  requisições (`.req`) são registradas, sem as confirmações (`.conf`).
+  requisições (`.req`) são registradas, sem as confirmações (`.conf`). Isso não implica que o HCA G2 real fale OCPP
+  (ver seção 8).
 - A rampa inicial de 2 min da curva de carga foi desprezada (o passo é de 5 min).
 - O corte de demanda é proporcional e não considera prioridade por plano de assinatura.
 - A previsão é **estatística** (média por hora), e não aprendizado de máquina; o Challenge usa Prophet.
