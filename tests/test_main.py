@@ -27,6 +27,14 @@ def test_nao_expoe_o_caminho_absoluto_da_maquina(tmp_path, capsys, monkeypatch):
     assert str(tmp_path) not in saida
 
 
+def test_sem_dashboard_omite_o_resumo_final_mas_grava_os_arquivos(tmp_path, capsys):
+    cli.main(["--saida", str(tmp_path), "--dias-historico", "2", "--sem-graficos",
+              "--sem-dashboard"])
+    saida = capsys.readouterr().out
+    assert "Dashboard" not in saida and "CHARGEGRID" not in saida
+    assert (tmp_path / "resumo.json").exists()
+
+
 def test_sem_graficos_nao_gera_png(tmp_path):
     cli.main(["--saida", str(tmp_path), "--dias-historico", "3", "--sem-graficos"])
     assert not list(tmp_path.glob("*.png"))

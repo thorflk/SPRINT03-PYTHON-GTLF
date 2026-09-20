@@ -332,6 +332,7 @@ python -m chargegrid.varredura --n 30    # varredura de seeds
 | `--janela` | `17:55-21:30` | Faixa de horário mostrada no modo ao vivo |
 | `--velocidade` | 0,05 | Segundos entre intervalos no modo ao vivo |
 | `--sem-graficos` | desligado | Não gera os PNG |
+| `--sem-dashboard` | desligado | Não imprime o dashboard final (útil com `--ao-vivo`) |
 
 Sugestões de janelas para o modo ao vivo: `--janela 10:00-13:00` mostra a solar cobrindo as recargas do meio do dia;
 o padrão (`17:55-21:30`) mostra a virada da tarifa às 18h, o crescimento da demanda, o corte e os comandos OCPP.

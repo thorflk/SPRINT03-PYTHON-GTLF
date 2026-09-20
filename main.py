@@ -65,6 +65,7 @@ def _argumentos(argv: list[str] | None) -> argparse.Namespace:
     ap.add_argument("--janela", default="17:55-21:30", help="HH:MM-HH:MM (só com --ao-vivo)")
     ap.add_argument("--velocidade", type=float, default=0.05, help="segundos entre intervalos")
     ap.add_argument("--sem-graficos", action="store_true")
+    ap.add_argument("--sem-dashboard", action="store_true", help="não imprime o dashboard final")
     return ap.parse_args(argv)
 
 
@@ -98,8 +99,9 @@ def main(argv: list[str] | None = None) -> int:
     if not args.sem_graficos:
         gerar_graficos(res, prev, pasta)
 
-    textos = recomendacoes(prev, cfg.LIMITE_OPERACIONAL_KW)
-    print(formatar_dashboard(resumo, textos, sessoes_para_df(res.sessoes)))
+    if not args.sem_dashboard:
+        textos = recomendacoes(prev, cfg.LIMITE_OPERACIONAL_KW)
+        print(formatar_dashboard(resumo, textos, sessoes_para_df(res.sessoes)))
     print(f"\nArquivos gravados em: {pasta}")  # como digitado: nunca expõe o caminho absoluto
     return 0
 
