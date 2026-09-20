@@ -10,7 +10,7 @@ from pathlib import Path
 import pandas as pd
 
 from chargegrid import config as cfg
-from chargegrid.formato import br
+from chargegrid.formato import br, configurar_saida_utf8
 from chargegrid.simulacao import simular_dia
 
 
@@ -59,6 +59,7 @@ def resumo_markdown(df: pd.DataFrame) -> str:
 
 
 def main(argv: list[str] | None = None) -> int:
+    configurar_saida_utf8()
     ap = argparse.ArgumentParser(description="Varredura de seeds do ChargeGrid")
     ap.add_argument("--n", type=int, default=30)
     ap.add_argument("--saida", default="docs/resultados/varredura_seeds.md")

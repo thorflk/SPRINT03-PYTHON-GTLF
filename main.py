@@ -14,6 +14,7 @@ import time
 from pathlib import Path
 
 from chargegrid import config as cfg
+from chargegrid.formato import configurar_saida_utf8
 from chargegrid.graficos import gerar_graficos
 from chargegrid.previsao import ajustar, backtest, gerar_historico, recomendacoes
 from chargegrid.relatorio import (
@@ -24,14 +25,6 @@ from chargegrid.relatorio import (
     sessoes_para_df,
 )
 from chargegrid.simulacao import simular_dia
-
-
-def _utf8() -> None:
-    for fluxo in (sys.stdout, sys.stderr):
-        try:
-            fluxo.reconfigure(encoding="utf-8")
-        except (AttributeError, ValueError):
-            pass
 
 
 def _parse_janela(texto: str) -> tuple[int, int]:
@@ -60,7 +53,7 @@ def _argumentos(argv: list[str] | None) -> argparse.Namespace:
 
 
 def main(argv: list[str] | None = None) -> int:
-    _utf8()
+    configurar_saida_utf8()
     args = _argumentos(argv)
     callback = None
     if args.ao_vivo:
