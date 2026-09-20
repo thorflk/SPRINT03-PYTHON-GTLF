@@ -70,6 +70,9 @@ TOP_HORAS_RECOMENDADAS = 3
 SOLAR_MINIMO_RECOMENDACAO_KW = 5.0
 
 # --- reprodutibilidade -------------------------------------------------------------------
-SEED_DEMO = 42
+# Seed da demonstração: a MENOR seed (varredura de 1 a 60) com 90-240 min de corte de demanda,
+# >= 30 kWh recarregados no pico, >= 30 kWh de solar consumida e >= 8 sessões. A varredura de
+# `python -m chargegrid.varredura` mostra que o comportamento vale para as demais seeds.
+SEED_DEMO = 6
 SEED_HISTORICO_BASE = 1000
 DIAS_HISTORICO = 14
