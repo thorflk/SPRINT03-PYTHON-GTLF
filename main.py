@@ -27,17 +27,33 @@ from chargegrid.relatorio import (
 from chargegrid.simulacao import simular_dia
 
 
-def _parse_janela(texto: str) -> tuple[int, int]:
+def _minutos(horario: str, janela: str) -> int:
+    """Converte 'HH:MM' em minutos do dia, aceitando 24:00 como fim do dia."""
     try:
-        inicio, fim = texto.split("-")
-        h1, m1 = inicio.split(":")
-        h2, m2 = fim.split(":")
-        janela = (int(h1) * 60 + int(m1), int(h2) * 60 + int(m2))
+        horas, minutos = (int(parte) for parte in horario.split(":"))
     except ValueError as erro:
-        raise ValueError(f"janela inválida: {texto!r} (use HH:MM-HH:MM)") from erro
-    if not 0 <= janela[0] < janela[1] <= 24 * 60:
+        raise ValueError(f"janela inválida: {janela!r} (use HH:MM-HH:MM)") from erro
+    if not (0 <= minutos < 60 and 0 <= horas <= 24 and (horas < 24 or minutos == 0)):
+        raise ValueError(f"janela inválida: {janela!r} (horário inexistente: {horario})")
+    return horas * 60 + minutos
+
+
+def _parse_janela(texto: str) -> tuple[int, int]:
+    partes = texto.split("-")
+    if len(partes) != 2:
+        raise ValueError(f"janela inválida: {texto!r} (use HH:MM-HH:MM)")
+    inicio, fim = (_minutos(parte, texto) for parte in partes)
+    if inicio >= fim:
         raise ValueError(f"janela inválida: {texto!r} (o início deve ser menor que o fim)")
-    return janela
+    return inicio, fim
+
+
+def _erro_de_argumentos(args: argparse.Namespace) -> str | None:
+    if args.dias_historico < 1:
+        return "--dias-historico deve ser pelo menos 1"
+    if args.velocidade < 0:
+        return "--velocidade não pode ser negativa"
+    return None
 
 
 def _argumentos(argv: list[str] | None) -> argparse.Namespace:
@@ -55,6 +71,10 @@ def _argumentos(argv: list[str] | None) -> argparse.Namespace:
 def main(argv: list[str] | None = None) -> int:
     configurar_saida_utf8()
     args = _argumentos(argv)
+    erro_args = _erro_de_argumentos(args)
+    if erro_args:
+        print(f"Erro: {erro_args}", file=sys.stderr)
+        return 2
     callback = None
     if args.ao_vivo:
         try:

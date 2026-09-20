@@ -1,3 +1,5 @@
+import pytest
+
 import main as cli
 
 
@@ -46,6 +48,24 @@ def test_ao_vivo_imprime_so_a_janela_pedida(tmp_path, capsys):
 
 def test_janela_invalida_devolve_erro(tmp_path, capsys):
     assert cli.main(["--saida", str(tmp_path), "--ao-vivo", "--janela", "abc"]) == 2
+    assert "janela" in capsys.readouterr().err.lower()
+
+
+@pytest.mark.parametrize("dias", ["0", "-3"])
+def test_dias_de_historico_invalidos_devolvem_erro_claro(tmp_path, capsys, dias):
+    assert cli.main(["--saida", str(tmp_path), "--dias-historico", dias]) == 2
+    assert "dias-historico" in capsys.readouterr().err
+
+
+def test_velocidade_negativa_devolve_erro_claro(tmp_path, capsys):
+    argv = ["--saida", str(tmp_path), "--ao-vivo", "--velocidade", "-1"]
+    assert cli.main(argv) == 2
+    assert "velocidade" in capsys.readouterr().err
+
+
+@pytest.mark.parametrize("janela", ["10:60-12:00", "24:30-24:45", "10:00-25:00", "18:00", "a:b-c:d"])
+def test_janela_impossivel_ou_mal_formada_devolve_erro(tmp_path, capsys, janela):
+    assert cli.main(["--saida", str(tmp_path), "--ao-vivo", "--janela", janela]) == 2
     assert "janela" in capsys.readouterr().err.lower()
 
 

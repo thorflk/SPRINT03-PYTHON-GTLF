@@ -14,6 +14,22 @@ from chargegrid.simulacao import ResultadoDia
 from chargegrid.tarifacao import em_reais
 
 LARGURA = 66
+COLUNAS_SESSOES = [
+    "id",
+    "ponto",
+    "veiculo",
+    "inicio",
+    "fim",
+    "duracao_min",
+    "soc_inicial",
+    "soc_final",
+    "energia_kwh",
+    "energia_solar_kwh",
+    "energia_pico_kwh",
+    "custo_brl",
+    "minutos_em_corte",
+    "concluida",
+]
 
 
 def _hhmm(tick: int) -> str:
@@ -43,7 +59,7 @@ def sessoes_para_df(sessoes: list[Sessao]) -> pd.DataFrame:
                 "concluida": s.concluida,
             }
         )
-    return pd.DataFrame(linhas)
+    return pd.DataFrame(linhas, columns=COLUNAS_SESSOES)
 
 
 def montar_resumo(res: ResultadoDia, prev: Previsao, bt: dict[str, float]) -> dict:

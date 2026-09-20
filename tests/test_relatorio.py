@@ -56,6 +56,12 @@ def test_resumo_traz_a_previsao(contexto):
     assert r["previsao_mae_kw"] == bt["mae_kw"]
 
 
+def test_sessoes_para_df_vazio_mantem_as_colunas():
+    df = sessoes_para_df([])
+    assert len(df) == 0
+    assert {"id", "ponto", "veiculo", "energia_kwh", "custo_brl"} <= set(df.columns)
+
+
 def test_sessoes_para_df_tem_uma_linha_por_sessao(contexto):
     res, *_ = contexto
     df = sessoes_para_df(res.sessoes)
