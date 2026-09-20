@@ -42,4 +42,4 @@
   8    P2         Renault Zoe  20:30 24:00       31.663              0.000      29.19               160
 ══════════════════════════════════════════════════════════════════
 
-Arquivos gravados em: C:\Users\thorf\OneDrive - Fiap-Faculdade de Informática e Administração Paulista\FIAP\TRABALHOS FIAP\spt03-python-russi\saida
+Arquivos gravados em: saida

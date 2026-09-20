@@ -19,6 +19,14 @@ def test_execucao_completa_grava_saidas_e_imprime_dashboard(tmp_path, capsys):
         assert (tmp_path / nome).exists(), nome
 
 
+def test_nao_expoe_o_caminho_absoluto_da_maquina(tmp_path, capsys, monkeypatch):
+    monkeypatch.chdir(tmp_path)
+    cli.main(["--saida", "saida", "--dias-historico", "2", "--sem-graficos"])
+    saida = capsys.readouterr().out
+    assert "Arquivos gravados em: saida" in saida
+    assert str(tmp_path) not in saida
+
+
 def test_sem_graficos_nao_gera_png(tmp_path):
     cli.main(["--saida", str(tmp_path), "--dias-historico", "3", "--sem-graficos"])
     assert not list(tmp_path.glob("*.png"))

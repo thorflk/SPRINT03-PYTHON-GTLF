@@ -100,7 +100,7 @@ def main(argv: list[str] | None = None) -> int:
 
     textos = recomendacoes(prev, cfg.LIMITE_OPERACIONAL_KW)
     print(formatar_dashboard(resumo, textos, sessoes_para_df(res.sessoes)))
-    print(f"\nArquivos gravados em: {pasta.resolve()}")
+    print(f"\nArquivos gravados em: {pasta}")  # como digitado: nunca expõe o caminho absoluto
     return 0
 
 
