@@ -1,0 +1,9 @@
+id,ponto,veiculo,inicio,fim,duracao_min,soc_inicial,soc_final,energia_kwh,energia_solar_kwh,energia_pico_kwh,custo_brl,minutos_em_corte,concluida
+1,P1,Chevrolet Bolt EV,10:10,14:00,230,0.46,0.9,26.4,15.224,0.0,22.44,0,True
+2,P2,Nissan Leaf,10:35,13:10,155,0.38,0.8,16.8,8.358,0.0,14.28,0,True
+3,P3,Volvo XC40 Recharge,11:00,16:10,310,0.47,1.0,41.34,22.027,0.0,35.14,0,True
+4,P4,Renault Kwid E-Tech,14:25,16:45,140,0.36,0.9,14.472,7.304,0.0,12.3,0,True
+5,P3,Renault Kwid E-Tech,18:15,22:25,250,0.19,1.0,21.708,0.0,17.296,27.96,115,True
+6,P4,Renault Zoe,19:20,23:45,265,0.36,0.9,28.08,0.0,11.417,30.15,160,True
+7,P1,BYD Dolphin,20:00,24:00,240,0.31,0.861,24.752,0.0,6.133,24.41,160,False
+8,P2,Renault Zoe,20:30,24:00,210,0.31,0.919,31.663,0.0,4.138,29.19,160,False

@@ -1,0 +1,45 @@
+══════════════════════════════════════════════════════════════════
+  CHARGEGRID INTELLIGENCE — Dashboard do dia simulado
+  EV Challenge 2026 | FIAP x GoodWe | Grupo GTLF | seed 6
+  Todos os dados são SIMULADOS (ver README).
+══════════════════════════════════════════════════════════════════
+
+──── Operação ────────────────────────────────────────────────────
+  Sessões: 8 (6 concluídas, 1 recusada por falta de ponto)
+  Pico de demanda desejada  : 32,0 kW
+  Limite da rede            : 24,0 kW (30 kW disponíveis x 0,80)
+  Pico de importação        : 24,0 kW
+  Tempo com corte de demanda: 160 min
+
+──── Energia e sustentabilidade ──────────────────────────────────
+  Energia entregue : 205,2 kWh
+  Geração solar    : 52,9 kWh (25,8%)
+  Rede elétrica    : 152,3 kWh
+  CO₂ evitado vs combustão: 153,9 kg
+
+──── Financeiro ──────────────────────────────────────────────────
+  Receita total   : R$ 195,88 (pico R$ 54,58 | normal R$ 141,30)
+  Energia recarregada no pico: 39,0 kWh
+  Economia do operador com solar: R$ 31,75 (premissa: rede a R$ 0,60/kWh)
+  Economia potencial dos clientes se saíssem do pico: R$ 21,44
+
+──── IA — previsão e orientação ──────────────────────────────────
+  Erro médio da previsão por hora: 4,12 kW (baseline constante: 8,98 kW)
+  • Pico previsto entre 20h e 23h: demanda média de 25,5 kW (106% do limite de 24 kW).
+  • A tarifa de pico (R$ 1,40/kWh, 18h–21h) cobre só parte dessa janela; nas demais horas é R$ 0,85/kWh — vale avaliar estender a faixa de pico.
+  • Melhores horários para recarregar: 9h, 10h, 11h — menor ocupação prevista, tarifa normal e geração solar disponível.
+  • Exemplo: deslocar uma recarga de 30 kWh do pico para esses horários economiza R$ 16,50.
+
+──── Sessões do dia ──────────────────────────────────────────────
+ id ponto             veiculo inicio   fim  energia_kwh  energia_solar_kwh  custo_brl  minutos_em_corte
+  1    P1   Chevrolet Bolt EV  10:10 14:00       26.400             15.224      22.44                 0
+  2    P2         Nissan Leaf  10:35 13:10       16.800              8.358      14.28                 0
+  3    P3 Volvo XC40 Recharge  11:00 16:10       41.340             22.027      35.14                 0
+  4    P4 Renault Kwid E-Tech  14:25 16:45       14.472              7.304      12.30                 0
+  5    P3 Renault Kwid E-Tech  18:15 22:25       21.708              0.000      27.96               115
+  6    P4         Renault Zoe  19:20 23:45       28.080              0.000      30.15               160
+  7    P1         BYD Dolphin  20:00 24:00       24.752              0.000      24.41               160
+  8    P2         Renault Zoe  20:30 24:00       31.663              0.000      29.19               160
+══════════════════════════════════════════════════════════════════
+
+Arquivos gravados em: C:\Users\thorf\OneDrive - Fiap-Faculdade de Informática e Administração Paulista\FIAP\TRABALHOS FIAP\spt03-python-russi\saida
