@@ -25,7 +25,7 @@ simulação de um dia inteiro, com dashboard, gráficos, arquivos de dados e tes
 
 ## 2. Vídeo técnico
 
-Vídeo (YouTube, não listado, até 5 minutos): [(https://youtu.be/3GN9RzPSDQU))](https://youtu.be/3GN9RzPSDQU)
+Vídeo (YouTube, não listado, até 5 minutos): [https://youtu.be/3GN9RzPSDQU](https://youtu.be/3GN9RzPSDQU)
 
 ## 3. Evolução: Sprint 1 → Sprint 2 → Sprint 3
 
